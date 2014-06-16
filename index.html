@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ExtrapolatePetalLength</title>
+  <meta charset="utf-8">
+  <meta name="description" content="ExtrapolatePetalLength">
+  <meta name="author" content="">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>ExtrapolatePetalLength</h1>
+    <h2>A tiny app to extrapolate petal length from Iris data</h2>
+    <p><br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <h1></h1>
+
+<p>This slide deck has been created using Slidify for the data products class.
+This deck goes along with the project for the data products class which is to create a Shiny app.
+The Shiny app is called ExtrapolatePetalLength.</p>
+
+<p>I was thinking about what to do for the app and wanted to keep it simple. I wanted to use a built-in dataset from the base package as this was a project requirement. The Iris dataset was good enough since it had a decent number of observations.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>App Usage</h2>
+  </hgroup>
+  <article data-timings="">
+    <h1></h1>
+
+<ul>
+<li><p>The app plots the dependence of Petal Length given Sepal Length. The data in the plot is split by Species although they&#39;re plotted in the same plot to add perspective.</p></li>
+<li><p>The user can then choose to play around with different Sepal Lengths for a given species. The app will reactively calculate (extrapolate) the new Petal Length based on a simple lm model. </p></li>
+<li><p>Lines are also fitted through the plot to give the user a perspective of the where the extraploted values will fit.</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>R calculations</h2>
+  </hgroup>
+  <article data-timings="">
+    <h1></h1>
+
+<p>The main calculation for the app is to calculate x and y coordinates for the new value. 
+This is done by finding the slope and intercept for the line for a given species.
+An example calculation is shown here.</p>
+
+<p>Assuming the user selects a Sepal Length of 6 and the species &#39;setosa&#39; (1)</p>
+
+<pre><code class="r">data(iris)
+x &lt;- 6
+setosa &lt;- 1
+fitList &lt;- lapply(split(iris,iris$Species), lm, formula=Petal.Length~Sepal.Length)
+y &lt;- summary(fitList[[setosa]])$coef[1,1] + x * summary(fitList[[setosa]])$coef[2,1]
+y
+</code></pre>
+
+<pre><code>## [1] 1.593
+</code></pre>
+
+<p>Thus the new x,y coordinates for the plot are {6, 1.5928}</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Conclusion</h2>
+  </hgroup>
+  <article data-timings="">
+    <h1></h1>
+
+<p>The app itself is here <a href="http://asangoi.shinyapps.io/ExtrapolatePetalLength">http://asangoi.shinyapps.io/ExtrapolatePetalLength</a></p>
+
+<p>The code for the app is on github <a href="https://github.com/asangoi/ExtrapolatePetalLength">https://github.com/asangoi/ExtrapolatePetalLength</a></p>
+
+<p>Go check it out!</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='App Usage'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='R calculations'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Conclusion'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
